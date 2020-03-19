@@ -55,7 +55,7 @@ NUM_EPOCHS = 100
 LEARNING_RATE = 0.0001
 RANDOM_SEED = 123
 LOG_STEP = 150
-LOG_DIR = '/path/to/logs' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+LOG_DIR = '~/Deep_Telemetry/logs/' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 damage_intensity_encoding = dict()
 damage_intensity_encoding[3] = '3'
@@ -168,9 +168,9 @@ def train_model(train_data, train_csv, test_data, test_csv, model_in, model_out)
 
     
     #Filepath to save model weights
-    filepath = model_out + "-saved-model-{epoch:02d}-{accuracy:.2f}.hdf5"
+    filepath = model_out + "-saved-model-{epoch:02d}-{acc:.2f}.hdf5"
     checkpoints = keras.callbacks.ModelCheckpoint(filepath,
-                                                    monitor=['loss', 'accuracy'],
+                                                    monitor=['loss', 'acc'],
                                                     verbose=1,
                                                     save_best_only=False,
                                                     mode='max')
@@ -183,7 +183,7 @@ def train_model(train_data, train_csv, test_data, test_csv, model_in, model_out)
                                     amsgrad=False)
 
 
-    model.compile(loss=ordinal_loss, optimizer=adam, metrics=['accuracy', f1])
+    model.compile(loss=ordinal_loss, optimizer=adam, metrics=['acc', f1])
 
     #Training begins
     model.fit_generator(generator=train_gen_flow,

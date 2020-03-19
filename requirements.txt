@@ -30,3 +30,4 @@ scikit-learn
 chainer
 tensorboard
 tensorboardX
+cupy

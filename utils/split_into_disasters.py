@@ -28,6 +28,7 @@ def get_files(base_dir):
 def move_files(files, base_dir, output_dir):
     for filename in files:
         disaster = filename.split("_")[0]
+        print(disaster)
 
         # If the output directory and disater name do not exist make the directory
         if not path.isdir(path.join(output_dir, disaster)):

@@ -43,11 +43,13 @@ def create_image(inference_data):
 
     for poly in inference_data:
         damage = poly['properties']['subtype']
+        print(f"Damage: {damage}")
         coords = wkt.loads(poly['wkt'])
         poly_np = np.array(coords.exterior.coords, np.int32)
         
-        fillPoly(mask_img, [poly_np], damage_key[damage])
+        fillPoly(mask_img, [poly_np], color=damage_key[damage])
     
+    print(mask_img.shape)
     return mask_img
 
 def save_image(polygons, output_path):

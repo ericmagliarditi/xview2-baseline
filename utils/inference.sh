@@ -42,6 +42,7 @@ input=""
 input_post=""
 inference_base="/tmp/inference"
 LOGFILE="/tmp/inference_log"
+# LOGFILE="logs"
 XBDIR=""
 virtual_env=""
 localization_weights=""
@@ -144,17 +145,21 @@ cd "$XBDIR"/model
 # Since post is where the damage occurs
 printf "Grabbing post image file for classification\n"
 disaster_post_file="$input_post"
-
+printf "$disaster_post_file\n"
 mkdir -p "$inference_base"/output_polygons
 
 printf "Running classification\n" 
 
 # Extracting polygons from post image 
 python3 ./process_data_inference.py --input_img "$disaster_post_file" --label_path "$label_temp"/"${input_image%.*}".json --output_dir "$inference_base"/output_polygons --output_csv "$inference_base"/output.csv >> "$LOGFILE" 2>&1
-
+printf "Completed Processing data\n"
 # Classifying extracted polygons 
+test_data="$inference_base"/output_polygons
+test_csv="$inference_base"/output.csv
+printf "$test_data\n"
+printf "$test_csv\n"
 python3 ./damage_inference.py --test_data "$inference_base"/output_polygons --test_csv "$inference_base"/output.csv --model_weights "$classification_weights" --output_json /tmp/inference/classification_inference.json >> "$LOGFILE" 2>&1
-
+printf "Completed Damage Inference\n"
 printf "\n" >> "$LOGFILE"
 
 # Combining the predicted polygons with the predicted labels, based off a UUID generated during the localization inference stage  

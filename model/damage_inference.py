@@ -88,7 +88,7 @@ def create_generator(test_df, test_dir, output_json_path):
 
 # Runs inference on given test data and pretrained model
 def run_inference(test_data, test_csv, model_weights, output_json_path):
-
+   print("RUNNING INFERENCES")
    model = generate_xBD_baseline_model()
    model.load_weights(model_weights)
 
@@ -100,8 +100,8 @@ def run_inference(test_data, test_csv, model_weights, output_json_path):
                                     amsgrad=False)
 
 
-   model.compile(loss=ordinal_loss, optimizer=adam, metrics=['accuracy'])
-
+   model.compile(loss=ordinal_loss, optimizer=adam, metrics=['acc'])
+   print("Complied Model")
    df = pd.read_csv(test_csv)
 
    test_gen = create_generator(df, test_data, output_json_path)
@@ -152,4 +152,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print("TESTING")
     main()
